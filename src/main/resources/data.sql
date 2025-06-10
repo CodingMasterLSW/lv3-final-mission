@@ -8,9 +8,15 @@ INSERT INTO COACH(name, email) VALUES('솔라','a1@com');
 INSERT INTO COACH(name, email) VALUES('리사','a2@com');
 INSERT INTO COACH(name, email) VALUES('네오','a3@com');
 
-INSERT INTO RESERVATION(coach_id, crew_id, reservation_time)
-VALUES(1L, 1L, '2030-06-10 10:30:00');
-INSERT INTO RESERVATION(coach_id, crew_id, reservation_time)
-VALUES(1L, 2L, '2030-06-11 10:30:00');
-INSERT INTO RESERVATION(coach_id, crew_id, reservation_time)
-VALUES(1L, 3L, '2030-06-12 10:30:00')
+INSERT INTO RESERVATION_TIME(start_at) VALUES('10:00');
+INSERT INTO RESERVATION_TIME(start_at) VALUES('11:00');
+INSERT INTO RESERVATION_TIME(start_at) VALUES('12:00');
+INSERT INTO RESERVATION_TIME(start_at) VALUES('13:00');
+INSERT INTO RESERVATION_TIME(start_at) VALUES('14:00');
+
+INSERT INTO RESERVATION(coach_id, crew_id, reservation_time, date)
+VALUES(1L, 1L, 1L, '2030-06-10');
+INSERT INTO RESERVATION(coach_id, crew_id, reservation_time, date)
+VALUES(1L, 2L, 1L, '2030-06-11');
+INSERT INTO RESERVATION(coach_id, crew_id, reservation_time, date)
+VALUES(1L, 3L, 1L, '2030-06-12')

@@ -3,12 +3,13 @@ package finalmission.service;
 import finalmission.domain.Coach;
 import finalmission.domain.Reservation;
 import finalmission.domain.Crew;
+import finalmission.domain.ReservationTime;
 import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
 import finalmission.repository.CoachRepository;
 import finalmission.repository.ReservationRepository;
 import finalmission.repository.CrewRepository;
-import java.time.LocalDateTime;
+import finalmission.repository.ReservationTimeRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,22 +21,26 @@ public class ReservationService {
     private final CoachRepository coachRepository;
     private final CrewRepository crewRepository;
     private final ReservationRepository reservationRepository;
+    private final ReservationTimeRepository reservationTimeRepository;
 
     public ReservationService(
         CoachRepository coachRepository,
         CrewRepository crewRepository,
-        ReservationRepository reservationRepository
+        ReservationRepository reservationRepository,
+        ReservationTimeRepository reservationTimeRepository
     ) {
         this.coachRepository = coachRepository;
         this.crewRepository = crewRepository;
         this.reservationRepository = reservationRepository;
+        this.reservationTimeRepository = reservationTimeRepository;
     }
 
     @Transactional
     public Reservation save(ReservationRequestDto request) {
         Coach coach = findCoachById(request.coachId());
         Crew crew = findCrewById(request.crewId());
-        Reservation reservation = new Reservation(coach, crew, request.reservationTime());
+        ReservationTime reservationTime = findTimeById(request.reservationTimeId());
+        Reservation reservation = new Reservation(coach, crew, reservationTime, request.date());
         return reservationRepository.save(reservation);
     }
 
@@ -85,6 +90,11 @@ public class ReservationService {
     private Crew findCrewById(Long id) {
         return crewRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+    }
+
+    private ReservationTime findTimeById(Long id) {
+        return reservationTimeRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 시간입니다."));
     }
 
 }

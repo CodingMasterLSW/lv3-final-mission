@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import finalmission.domain.Reservation;
 import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +34,7 @@ class ReservationServiceTest {
         jdbcTemplate.execute("DELETE FROM RESERVATION");
         jdbcTemplate.execute("DELETE FROM CREW");
         jdbcTemplate.execute("DELETE FROM COACH");
+        jdbcTemplate.execute("DELETE FROM RESERVATION_TIME");
     }
 
     @Test
@@ -42,7 +43,7 @@ class ReservationServiceTest {
 
         // given
         ReservationRequestDto requestDto = new ReservationRequestDto(
-            1L, 1L, LocalDateTime.now().plusDays(1)
+            1L, 1L, 1L, LocalDate.now().plusDays(1)
         );
 
         // when
@@ -59,14 +60,14 @@ class ReservationServiceTest {
 
         // given
         ReservationRequestDto requestDto1 = new ReservationRequestDto(
-            1L, 1L, LocalDateTime.now().plusDays(1)
+            1L, 1L, 1L, LocalDate.now().plusDays(1)
         );
         ReservationRequestDto requestDto2 = new ReservationRequestDto(
-            1L, 2L, LocalDateTime.now().plusDays(2)
+            1L, 2L, 1L, LocalDate.now().plusDays(2)
         );
 
         ReservationRequestDto requestDto3 = new ReservationRequestDto(
-            2L, 3L, LocalDateTime.now().plusDays(2)
+            2L, 3L, 1L, LocalDate.now().plusDays(3)
         );
 
         reservationService.save(requestDto1);
@@ -87,14 +88,14 @@ class ReservationServiceTest {
 
         // given
         ReservationRequestDto requestDto1 = new ReservationRequestDto(
-            1L, 1L, LocalDateTime.now().plusDays(1)
+            1L, 1L, 1L, LocalDate.now().plusDays(1)
         );
         ReservationRequestDto requestDto2 = new ReservationRequestDto(
-            2L, 1L, LocalDateTime.now().plusDays(2)
+            2L, 1L, 1L, LocalDate.now().plusDays(2)
         );
 
         ReservationRequestDto requestDto3 = new ReservationRequestDto(
-            3L, 1L, LocalDateTime.now().plusDays(2)
+            3L, 1L, 1L, LocalDate.now().plusDays(3)
         );
 
         reservationService.save(requestDto1);
@@ -113,6 +114,8 @@ class ReservationServiceTest {
         jdbcTemplate.execute("INSERT INTO CREW(id, name, email) VALUES(1L, '젠슨','a@com')");
         jdbcTemplate.execute("INSERT INTO CREW(id,name, email) VALUES(2L, '포포','b@com')");
         jdbcTemplate.execute("INSERT INTO CREW(id, name, email) VALUES(3L, '가이온','c@com')");
+        jdbcTemplate.execute("INSERT INTO RESERVATION_TIME(id, start_at) VALUES(1L, '10:00')");
+        jdbcTemplate.execute("INSERT INTO RESERVATION_TIME(id, start_at) VALUES(2L, '11:00')");
         jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(1L, '솔라','a1@com')");
         jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(2L, '리사','a2@com')");
         jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(3L, '네오','a3@com')");
