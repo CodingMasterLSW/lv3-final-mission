@@ -46,7 +46,7 @@ public class Reservation {
         return coach;
     }
 
-    public Crew getUser() {
+    public Crew getCrew() {
         return crew;
     }
 

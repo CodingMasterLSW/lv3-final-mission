@@ -4,6 +4,7 @@ import finalmission.domain.Coach;
 import finalmission.domain.Reservation;
 import finalmission.domain.Crew;
 import finalmission.dto.ReservationRequestDto;
+import finalmission.dto.ReservationResponse;
 import finalmission.repository.CoachRepository;
 import finalmission.repository.ReservationRepository;
 import finalmission.repository.CrewRepository;
@@ -37,12 +38,19 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-    public List<Reservation> getAllReservationsFromCrewId(Long crewId) {
-        return reservationRepository.findAllByCrewId(crewId);
+    // TODO : 메서드 재활용 해보기
+    public List<ReservationResponse> getAllReservationsFromCrewId(Long crewId) {
+        List<Reservation> reservations = reservationRepository.findAllByCrewId(crewId);
+        return reservations.stream()
+            .map(ReservationResponse::from)
+            .toList();
     }
 
-    public List<Reservation> getAllReservationsFromCoachId(Long coachId) {
-        return reservationRepository.findAllByCoachId(coachId);
+    public List<ReservationResponse> getAllReservationsFromCoachId(Long coachId) {
+        List<Reservation> reservations = reservationRepository.findAllByCoachId(coachId);
+        return reservations.stream()
+            .map(ReservationResponse::from)
+            .toList();
     }
 
     private Coach findCoachById(Long id) {

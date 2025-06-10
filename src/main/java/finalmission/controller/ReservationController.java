@@ -2,6 +2,7 @@ package finalmission.controller;
 
 import finalmission.domain.Reservation;
 import finalmission.dto.ReservationRequestDto;
+import finalmission.dto.ReservationResponse;
 import finalmission.service.ReservationService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +25,15 @@ public class ReservationController {
         return reservationService.save(reservationRequestDto);
     }
 
-    @GetMapping("/reservations/{crewId}")
-    public List<Reservation> getAllFromCrew(@PathVariable("crewId") Long crewId) {
+    // TODO : API Endpoint 변경하기
+    @GetMapping("/reservations/crew/{crewId}")
+    public List<ReservationResponse> getAllFromCrew(@PathVariable("crewId") Long crewId) {
         return reservationService.getAllReservationsFromCrewId(crewId);
     }
 
-
-    @GetMapping("/reservations/{coachId}")
-    public List<Reservation> getAllFromCoach(@PathVariable("coachId") Long coachId) {
+    // TODO : API Endpoint 변경하기
+    @GetMapping("/reservations/coach/{coachId}")
+    public List<ReservationResponse> getAllFromCoach(@PathVariable Long coachId) {
         return reservationService.getAllReservationsFromCoachId(coachId);
     }
 }
