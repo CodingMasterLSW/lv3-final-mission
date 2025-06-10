@@ -8,6 +8,7 @@ import finalmission.dto.ReservationResponse;
 import finalmission.repository.CoachRepository;
 import finalmission.repository.ReservationRepository;
 import finalmission.repository.CrewRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +39,24 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    @Transactional
+    public void deleteFromCrew(Long reservationId, Long crewId) {
+        Reservation reservation = findReservationById(reservationId);
+        if (!reservation.isOwnerCrewRequest(crewId)) {
+            throw new IllegalStateException("본인의 예약만 삭제할 수 있습니다.");
+        }
+        reservationRepository.deleteById(reservationId);
+    }
+
+    @Transactional
+    public void deleteFromCoach(Long reservationId, Long coachId) {
+        Reservation reservation = findReservationById(reservationId);
+        if (!reservation.isOwnerCoachRequest(coachId)) {
+            throw new IllegalStateException("본인의 예약만 삭제할 수 있습니다.");
+        }
+        reservationRepository.deleteById(reservationId);
+    }
+
     // TODO : 메서드 재활용 해보기
     public List<ReservationResponse> getAllReservationsFromCrewId(Long crewId) {
         List<Reservation> reservations = reservationRepository.findAllByCrewId(crewId);
@@ -51,6 +70,11 @@ public class ReservationService {
         return reservations.stream()
             .map(ReservationResponse::from)
             .toList();
+    }
+
+    private Reservation findReservationById(Long reservationId) {
+        return reservationRepository.findById(reservationId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 예약입니다."));
     }
 
     private Coach findCoachById(Long id) {

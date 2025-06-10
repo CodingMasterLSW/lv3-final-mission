@@ -4,6 +4,8 @@
 
 ### 예약
 - [x] 크루ID, 코치ID, 예약 시간이 주어졌을 때, 예약을 생성할 수 있어야 한다.
+- [x] 코치는 본인의 예약을 삭제할 수 있어야 한다.
+- [x] 크루는 본인의 예약을 삭제할 수 있어야 한다.
 
 ### 유저
 - [x] 본인의 예약을 조회할 수 있어야 한다.
@@ -21,5 +23,4 @@
 - [x] GET /reservations/{crewId} - 해당 크루가 예약한 모든 예약을 조회한다.
 - [x] GET /reservations/{coachId} - 해당 코치가 예약한 모든 예약을 조회한다.
 - [x] POST /reservations - 예약을 추가한다
-
-DELETE /reservations/{id} - 특정 예약을 삭제한다
+- [x] DELETE /reservations/{id} - 특정 예약을 삭제한다

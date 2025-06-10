@@ -38,6 +38,14 @@ public class Reservation {
         this.reservationTime = reservationTime;
     }
 
+    public boolean isOwnerCrewRequest(Long crewId) {
+        return this.crew.getId().equals(crewId);
+    }
+
+    public boolean isOwnerCoachRequest(Long coachId) {
+        return this.coach.getId().equals(coachId);
+    }
+
     public Long getId() {
         return id;
     }
