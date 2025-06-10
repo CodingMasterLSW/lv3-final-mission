@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import finalmission.domain.Reservation;
 import finalmission.dto.ReservationRequestDto;
+import finalmission.dto.ReservationResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -25,15 +26,14 @@ class ReservationServiceTest {
 
     @BeforeEach
     void init() {
-        jdbcTemplate.execute("INSERT INTO CREW(name, email) VALUES('젠슨','a@com')");
-        jdbcTemplate.execute("INSERT INTO COACH(name, email) VALUES('솔라','b@com')");
+        initData();
     }
 
     @AfterEach
     void clear() {
-        jdbcTemplate.execute("DROP TABLE RESERVATION");
-        jdbcTemplate.execute("DROP TABLE CREW");
-        jdbcTemplate.execute("DROP TABLE COACH");
+        jdbcTemplate.execute("DELETE FROM RESERVATION");
+        jdbcTemplate.execute("DELETE FROM CREW");
+        jdbcTemplate.execute("DELETE FROM COACH");
     }
 
     @Test
@@ -49,7 +49,7 @@ class ReservationServiceTest {
         Reservation save = reservationService.save(requestDto);
 
         // then
-        assertThat(save.getUser().getName()).isEqualTo("젠슨");
+        assertThat(save.getCrew().getName()).isEqualTo("젠슨");
         assertThat(save.getCoach().getName()).isEqualTo("솔라");
     }
 
@@ -74,11 +74,11 @@ class ReservationServiceTest {
         reservationService.save(requestDto3);
 
         // when
-        List<Reservation> reservations = reservationService.getAllReservationsFromCrewId(
+        List<ReservationResponse> reservationResponses = reservationService.getAllReservationsFromCrewId(
             1L);
 
         // then
-        assertThat(reservations.size()).isEqualTo(2);
+        assertThat(reservationResponses.size()).isEqualTo(2);
     }
 
     @Test
@@ -102,10 +102,21 @@ class ReservationServiceTest {
         reservationService.save(requestDto3);
 
         // when
-        List<Reservation> reservations = reservationService.getAllReservationsFromCoachId(
+        List<ReservationResponse> reservationResponses = reservationService.getAllReservationsFromCoachId(
             1L);
 
         // then
-        assertThat(reservations.size()).isEqualTo(3);
+        assertThat(reservationResponses.size()).isEqualTo(3);
+    }
+
+    private void initData() {
+        jdbcTemplate.execute("INSERT INTO CREW(id, name, email) VALUES(1L, '젠슨','a@com')");
+        jdbcTemplate.execute("INSERT INTO CREW(id,name, email) VALUES(2L, '포포','b@com')");
+        jdbcTemplate.execute("INSERT INTO CREW(id, name, email) VALUES(3L, '가이온','c@com')");
+        jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(1L, '솔라','a1@com')");
+        jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(2L, '리사','a2@com')");
+        jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(3L, '네오','a3@com')");
     }
 }
+
+
