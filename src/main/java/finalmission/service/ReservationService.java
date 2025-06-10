@@ -7,6 +7,7 @@ import finalmission.dto.ReservationRequestDto;
 import finalmission.repository.CoachRepository;
 import finalmission.repository.ReservationRepository;
 import finalmission.repository.CrewRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,14 @@ public class ReservationService {
         Crew crew = findCrewById(request.crewId());
         Reservation reservation = new Reservation(coach, crew, request.reservationTime());
         return reservationRepository.save(reservation);
+    }
+
+    public List<Reservation> getAllReservationsFromCrewId(Long crewId) {
+        return reservationRepository.findAllByCrewId(crewId);
+    }
+
+    public List<Reservation> getAllReservationsFromCoachId(Long coachId) {
+        return reservationRepository.findAllByCoachId(coachId);
     }
 
     private Coach findCoachById(Long id) {

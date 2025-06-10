@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import finalmission.domain.Reservation;
 import finalmission.dto.ReservationRequestDto;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,12 +39,73 @@ class ReservationServiceTest {
     @Test
     @DisplayName("예약을 저장할 수 있어야 한다.")
     void save_reservation() {
+
+        // given
         ReservationRequestDto requestDto = new ReservationRequestDto(
             1L, 1L, LocalDateTime.now().plusDays(1)
         );
+
+        // when
         Reservation save = reservationService.save(requestDto);
+
+        // then
         assertThat(save.getUser().getName()).isEqualTo("젠슨");
         assertThat(save.getCoach().getName()).isEqualTo("솔라");
+    }
 
+    @Test
+    @DisplayName("예약을 크루ID에 맞게 조회할 수 있어야 한다.")
+    void find_all_reservations_by_crew_id() {
+
+        // given
+        ReservationRequestDto requestDto1 = new ReservationRequestDto(
+            1L, 1L, LocalDateTime.now().plusDays(1)
+        );
+        ReservationRequestDto requestDto2 = new ReservationRequestDto(
+            1L, 2L, LocalDateTime.now().plusDays(2)
+        );
+
+        ReservationRequestDto requestDto3 = new ReservationRequestDto(
+            2L, 3L, LocalDateTime.now().plusDays(2)
+        );
+
+        reservationService.save(requestDto1);
+        reservationService.save(requestDto2);
+        reservationService.save(requestDto3);
+
+        // when
+        List<Reservation> reservations = reservationService.getAllReservationsFromCrewId(
+            1L);
+
+        // then
+        assertThat(reservations.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("예약을 코치ID에 맞게 조회할 수 있어야 한다.")
+    void find_all_reservations_by_coach_id() {
+
+        // given
+        ReservationRequestDto requestDto1 = new ReservationRequestDto(
+            1L, 1L, LocalDateTime.now().plusDays(1)
+        );
+        ReservationRequestDto requestDto2 = new ReservationRequestDto(
+            2L, 1L, LocalDateTime.now().plusDays(2)
+        );
+
+        ReservationRequestDto requestDto3 = new ReservationRequestDto(
+            3L, 1L, LocalDateTime.now().plusDays(2)
+        );
+
+        reservationService.save(requestDto1);
+        reservationService.save(requestDto2);
+        reservationService.save(requestDto3);
+
+        // when
+        List<Reservation> reservations = reservationService.getAllReservationsFromCoachId(
+            1L);
+
+        // then
+        assertThat(reservations.size()).isEqualTo(3);
     }
 }
