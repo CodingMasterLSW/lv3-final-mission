@@ -6,7 +6,8 @@ build/
 !**/src/test/**/build/
 src/main/resources/**
 src/main/resources/credentials.json
-
+src/test/resources/**
+src/test/resources/application.yml
 
 ### STS ###
 .apt_generated
