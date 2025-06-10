@@ -19,22 +19,22 @@ public class Reservation {
     private Coach coach;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Crew crew;
 
     private LocalDateTime reservationTime;
 
     protected Reservation() {}
 
-    public Reservation(Long id, Coach coach, User user, LocalDateTime reservationTime) {
+    public Reservation(Long id, Coach coach, Crew crew, LocalDateTime reservationTime) {
         this.id = id;
         this.coach = coach;
-        this.user = user;
+        this.crew = crew;
         this.reservationTime = reservationTime;
     }
 
-    public Reservation(Coach coach, User user, LocalDateTime reservationTime) {
+    public Reservation(Coach coach, Crew crew, LocalDateTime reservationTime) {
         this.coach = coach;
-        this.user = user;
+        this.crew = crew;
         this.reservationTime = reservationTime;
     }
 
@@ -46,8 +46,8 @@ public class Reservation {
         return coach;
     }
 
-    public User getUser() {
-        return user;
+    public Crew getUser() {
+        return crew;
     }
 
     public LocalDateTime getReservationTime() {
