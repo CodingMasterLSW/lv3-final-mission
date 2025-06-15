@@ -29,3 +29,5 @@
 - [x] DELETE /reservations/{id} - 특정 예약을 삭제한다
 
 - [x] POST /reservations/{reservationId}/accept - 예약 신청을 수락하거나 거절한다
+- [x] POST /login-coach - 코치 로그인
+- [x] POST /login-crew - 크루 로그인
