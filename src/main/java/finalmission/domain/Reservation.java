@@ -1,7 +1,8 @@
 package finalmission.domain;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,24 +30,30 @@ public class Reservation {
 
     private LocalDate date;
 
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
+
     protected Reservation() {
     }
 
     public Reservation(Long id, Coach coach, Crew crew, ReservationTime reservationTime,
-        LocalDate date
+        LocalDate date, ReservationStatus reservationStatus
     ) {
         this.id = id;
         this.coach = coach;
         this.crew = crew;
         this.reservationTime = reservationTime;
         this.date = date;
+        this.reservationStatus = reservationStatus;
     }
 
-    public Reservation(Coach coach, Crew crew, ReservationTime reservationTime, LocalDate date) {
+    public Reservation(Coach coach, Crew crew, ReservationTime reservationTime, LocalDate date,
+        ReservationStatus reservationStatus) {
         this.coach = coach;
         this.crew = crew;
         this.reservationTime = reservationTime;
         this.date = date;
+        this.reservationStatus = reservationStatus;
     }
 
     public boolean isOwnerCrewRequest(Long crewId) {

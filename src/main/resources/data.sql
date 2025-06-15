@@ -6,7 +6,7 @@ INSERT INTO CREW(name, email) VALUES('돔푸','e@com');
 
 INSERT INTO COACH(name, email) VALUES('솔라','a1@com');
 INSERT INTO COACH(name, email) VALUES('리사','a2@com');
-INSERT INTO COACH(name, email) VALUES('네오','a3@com');
+INSERT INTO COACH(name, email) VALUES('네오','spqjekdl1004@naver.com');
 
 INSERT INTO RESERVATION_TIME(start_at) VALUES('10:00');
 INSERT INTO RESERVATION_TIME(start_at) VALUES('11:00');

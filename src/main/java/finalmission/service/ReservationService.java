@@ -3,9 +3,12 @@ package finalmission.service;
 import finalmission.domain.Coach;
 import finalmission.domain.Reservation;
 import finalmission.domain.Crew;
+import finalmission.domain.ReservationStatus;
 import finalmission.domain.ReservationTime;
 import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
+import finalmission.dto.MailRequestDto;
+import finalmission.email.MailService;
 import finalmission.repository.CoachRepository;
 import finalmission.repository.ReservationRepository;
 import finalmission.repository.CrewRepository;
@@ -18,17 +21,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class ReservationService {
 
+    private final MailService mailService;
     private final CoachRepository coachRepository;
     private final CrewRepository crewRepository;
     private final ReservationRepository reservationRepository;
     private final ReservationTimeRepository reservationTimeRepository;
 
     public ReservationService(
+        MailService mailService,
         CoachRepository coachRepository,
         CrewRepository crewRepository,
         ReservationRepository reservationRepository,
         ReservationTimeRepository reservationTimeRepository
     ) {
+        this.mailService = mailService;
         this.coachRepository = coachRepository;
         this.crewRepository = crewRepository;
         this.reservationRepository = reservationRepository;
@@ -40,8 +46,15 @@ public class ReservationService {
         Coach coach = findCoachById(request.coachId());
         Crew crew = findCrewById(request.crewId());
         ReservationTime reservationTime = findTimeById(request.reservationTimeId());
-        Reservation reservation = new Reservation(coach, crew, reservationTime, request.date());
-        return reservationRepository.save(reservation);
+        Reservation reservation = new Reservation(coach, crew, reservationTime, request.date(), ReservationStatus.PENDING);
+        reservationRepository.save(reservation);
+        sendMailToCoach(reservation);
+        return reservation;
+    }
+
+    private void sendMailToCoach(Reservation reservation) {
+        MailRequestDto mailRequestDto = MailRequestDto.toCoach(reservation);
+        mailService.sendSimpleMailMessage(mailRequestDto);
     }
 
     @Transactional
