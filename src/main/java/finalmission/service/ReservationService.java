@@ -5,6 +5,7 @@ import finalmission.domain.Reservation;
 import finalmission.domain.Crew;
 import finalmission.domain.ReservationStatus;
 import finalmission.domain.ReservationTime;
+import finalmission.dto.AcceptResultDto;
 import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
 import finalmission.dto.MailRequestDto;
@@ -50,6 +51,18 @@ public class ReservationService {
         reservationRepository.save(reservation);
         sendMailToCoach(reservation);
         return reservation;
+    }
+
+    @Transactional
+    public void accept(Long reservationId, AcceptResultDto acceptResultDto) {
+        Reservation reservation = findReservationById(reservationId);
+        if (ReservationStatus.isAccepted(acceptResultDto.result())) {
+            reservation.changeStatus(ReservationStatus.ACCEPT);
+            mailService.sendSimpleMailMessage(MailRequestDto.toCrew(reservation));
+            return;
+        }
+        reservation.changeStatus(ReservationStatus.REJECT);
+        mailService.sendSimpleMailMessage(MailRequestDto.toCrew(reservation));
     }
 
     private void sendMailToCoach(Reservation reservation) {

@@ -1,6 +1,7 @@
 package finalmission.controller;
 
 import finalmission.domain.Reservation;
+import finalmission.dto.AcceptResultDto;
 import finalmission.dto.ReservationRemoveRequest;
 import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
@@ -62,5 +63,10 @@ public class ReservationController {
     @GetMapping("/reservations/coach/{coachId}")
     public List<ReservationResponse> getAllFromCoach(@PathVariable Long coachId) {
         return reservationService.getAllReservationsFromCoachId(coachId);
+    }
+
+    @PostMapping("/reservations/{reservationId}/accept")
+    public void acceptReservation(@PathVariable Long reservationId, @RequestBody AcceptResultDto resultDto) {
+        reservationService.accept(reservationId, resultDto);
     }
 }

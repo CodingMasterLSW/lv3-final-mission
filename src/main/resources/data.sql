@@ -1,4 +1,4 @@
-INSERT INTO CREW(name, email) VALUES('젠슨','a@com');
+INSERT INTO CREW(name, email) VALUES('젠슨','spqjekdl1004@naver.com');
 INSERT INTO CREW(name, email) VALUES('포포','b@com');
 INSERT INTO CREW(name, email) VALUES('가이온','c@com');
 INSERT INTO CREW(name, email) VALUES('짱구','d@com');

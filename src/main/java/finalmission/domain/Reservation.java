@@ -64,6 +64,10 @@ public class Reservation {
         return this.coach.getId().equals(coachId);
     }
 
+    public void changeStatus(ReservationStatus status) {
+        this.reservationStatus = status;
+    }
+
     public Long getId() {
         return id;
     }
@@ -82,5 +86,9 @@ public class Reservation {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public ReservationStatus getReservationStatus() {
+        return reservationStatus;
     }
 }
