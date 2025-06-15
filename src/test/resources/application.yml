@@ -28,3 +28,9 @@ spring:
           auth: true            # 사용자 인증 시도 여부
           starttls:
             enable: true        # starttls 활성화 여부
+security:
+  jwt:
+    token:
+      secret-key: s8R$kQz3nZ!L5pT7c@J#xM9vB1&uD6hE
+      access:
+        expire-length: 600000 # 10 분

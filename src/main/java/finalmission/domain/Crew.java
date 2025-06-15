@@ -1,12 +1,13 @@
 package finalmission.domain;
 
+import finalmission.login.MemberType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Crew {
+public class Crew implements Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +28,14 @@ public class Crew {
         this.email = email;
     }
 
+    @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public MemberType getType() {
+        return MemberType.CREW;
     }
 
     public String getName() {
