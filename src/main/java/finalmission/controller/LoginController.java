@@ -1,7 +1,7 @@
 package finalmission.controller;
 
-import finalmission.login.LoginRequestDto;
-import finalmission.login.Token;
+import finalmission.dto.LoginRequestDto;
+import finalmission.domain.login.Token;
 import finalmission.service.LoginService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

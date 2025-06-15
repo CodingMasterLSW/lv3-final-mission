@@ -1,4 +1,4 @@
-package finalmission.domain;
+package finalmission.domain.reservation;
 
 public enum ReservationStatus {
 

@@ -1,4 +1,4 @@
-package finalmission.login;
+package finalmission.dto;
 
 public record LoginRequestDto(String email) {
 

@@ -1,7 +1,6 @@
 package finalmission.repository;
 
-import finalmission.domain.Coach;
-import java.util.List;
+import finalmission.domain.member.Coach;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

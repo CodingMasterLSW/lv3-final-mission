@@ -1,4 +1,4 @@
-package finalmission.email;
+package finalmission.service;
 
 import finalmission.dto.MailRequestDto;
 import org.springframework.mail.SimpleMailMessage;

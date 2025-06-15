@@ -1,15 +1,14 @@
 package finalmission.service;
 
-import finalmission.domain.Coach;
-import finalmission.domain.Reservation;
-import finalmission.domain.Crew;
-import finalmission.domain.ReservationStatus;
-import finalmission.domain.ReservationTime;
+import finalmission.domain.member.Coach;
+import finalmission.domain.reservation.Reservation;
+import finalmission.domain.member.Crew;
+import finalmission.domain.reservation.ReservationStatus;
+import finalmission.domain.reservation.ReservationTime;
 import finalmission.dto.AcceptResultDto;
 import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
 import finalmission.dto.MailRequestDto;
-import finalmission.email.MailService;
 import finalmission.repository.CoachRepository;
 import finalmission.repository.ReservationRepository;
 import finalmission.repository.CrewRepository;

@@ -1,7 +1,7 @@
 package finalmission.dto;
 
 
-import finalmission.domain.Reservation;
+import finalmission.domain.reservation.Reservation;
 
 public record MailRequestDto(String sendTo, String subject, String text) {
 

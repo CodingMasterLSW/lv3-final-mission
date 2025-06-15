@@ -1,4 +1,4 @@
-package finalmission.domain;
+package finalmission.domain.reservation;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package finalmission.login;
+package finalmission.domain.login;
 
 public record Token(String accessToken) {
 

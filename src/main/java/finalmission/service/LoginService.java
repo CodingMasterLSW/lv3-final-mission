@@ -1,9 +1,9 @@
 package finalmission.service;
 
-import finalmission.domain.Member;
-import finalmission.login.JwtProvider;
-import finalmission.login.LoginRequestDto;
-import finalmission.login.Token;
+import finalmission.domain.member.Member;
+import finalmission.domain.login.JwtProvider;
+import finalmission.dto.LoginRequestDto;
+import finalmission.domain.login.Token;
 import finalmission.repository.CoachRepository;
 import finalmission.repository.CrewRepository;
 import org.springframework.stereotype.Service;

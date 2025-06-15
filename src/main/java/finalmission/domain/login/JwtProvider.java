@@ -1,6 +1,6 @@
-package finalmission.login;
+package finalmission.domain.login;
 
-import finalmission.domain.Member;
+import finalmission.domain.member.Member;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Jwts.SIG;
 import io.jsonwebtoken.security.Keys;

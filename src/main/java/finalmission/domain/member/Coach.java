@@ -1,6 +1,6 @@
-package finalmission.domain;
+package finalmission.domain.member;
 
-import finalmission.login.MemberType;
+import finalmission.domain.login.MemberType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

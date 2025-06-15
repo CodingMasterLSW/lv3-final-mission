@@ -1,6 +1,6 @@
 package finalmission.dto;
 
-import finalmission.domain.Reservation;
+import finalmission.domain.reservation.Reservation;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

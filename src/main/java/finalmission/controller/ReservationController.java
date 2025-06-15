@@ -1,6 +1,6 @@
 package finalmission.controller;
 
-import finalmission.domain.Reservation;
+import finalmission.domain.reservation.Reservation;
 import finalmission.dto.AcceptResultDto;
 import finalmission.dto.ReservationRemoveRequest;
 import finalmission.dto.ReservationRequestDto;

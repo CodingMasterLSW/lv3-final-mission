@@ -2,7 +2,9 @@ package finalmission.login;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import finalmission.domain.Coach;
+import finalmission.domain.login.JwtProvider;
+import finalmission.domain.login.Token;
+import finalmission.domain.member.Coach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

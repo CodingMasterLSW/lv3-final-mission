@@ -1,5 +1,7 @@
-package finalmission.domain;
+package finalmission.domain.reservation;
 
+import finalmission.domain.member.Coach;
+import finalmission.domain.member.Crew;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
