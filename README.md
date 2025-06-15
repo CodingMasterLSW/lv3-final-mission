@@ -24,3 +24,5 @@
 - [x] GET /reservations/{coachId} - 해당 코치가 예약한 모든 예약을 조회한다.
 - [x] POST /reservations - 예약을 추가한다
 - [x] DELETE /reservations/{id} - 특정 예약을 삭제한다
+
+- [x] POST /send-mail - 이메일을 보낸다

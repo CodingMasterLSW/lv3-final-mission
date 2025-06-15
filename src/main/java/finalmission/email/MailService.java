@@ -13,11 +13,11 @@ public class MailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendSimpleMailMessage() {
+    public void sendSimpleMailMessage(MailRequestDto mailRequestDto) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo("spqjekdl1004@naver.com");
-        simpleMailMessage.setSubject("커피챗이 예약되었습니다.");
-        simpleMailMessage.setText("커피챗에 대한 세부적인 내용 추가하기");
+        simpleMailMessage.setTo(mailRequestDto.sendTo());
+        simpleMailMessage.setSubject(mailRequestDto.subject());
+        simpleMailMessage.setText(mailRequestDto.text());
         javaMailSender.send(simpleMailMessage);
     }
 }

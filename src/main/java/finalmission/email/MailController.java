@@ -1,6 +1,8 @@
 package finalmission.email;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,8 +14,8 @@ public class MailController {
         this.mailService = mailService;
     }
 
-    @GetMapping("/mail")
-    public void a() {
-        mailService.sendSimpleMailMessage();
+    @PostMapping("/send-mail")
+    public void sendEmail(@RequestBody MailRequestDto mailRequestDto) {
+        mailService.sendSimpleMailMessage(mailRequestDto);
     }
 }
