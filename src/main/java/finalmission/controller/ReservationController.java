@@ -29,14 +29,14 @@ public class ReservationController {
 
     // TODO : API Endpoint 변경하기
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/reservations")
+    @PostMapping("/crew-reservation")
     public Reservation save(@RequestBody ReservationRequestDto reservationRequestDto) {
         return reservationService.save(reservationRequestDto);
     }
 
     // TODO : API Endpoint 변경하기
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/reservations/coach/{reservationId}")
+    @DeleteMapping("/coach-reservations/{reservationId}")
     public void deleteFromCoach(
         @PathVariable Long reservationId,
         @RequestBody ReservationRemoveRequest request
@@ -46,7 +46,7 @@ public class ReservationController {
 
     // TODO : API Endpoint 변경하기
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/reservations/crew/{reservationId}")
+    @DeleteMapping("/crew-reservations/{reservationId}")
     public void deleteFromCrew(
         @PathVariable Long reservationId,
         @RequestBody ReservationRemoveRequest request) {
@@ -54,18 +54,18 @@ public class ReservationController {
     }
 
     // TODO : API Endpoint 변경하기
-    @GetMapping("/reservations/crew/{crewId}")
+    @GetMapping("/crews/{crewId}/reservations")
     public List<ReservationResponse> getAllFromCrew(@PathVariable("crewId") Long crewId) {
         return reservationService.getAllReservationsFromCrewId(crewId);
     }
 
     // TODO : API Endpoint 변경하기
-    @GetMapping("/reservations/coach/{coachId}")
+    @GetMapping("/coaches/{coachId}/reservations")
     public List<ReservationResponse> getAllFromCoach(@PathVariable Long coachId) {
         return reservationService.getAllReservationsFromCoachId(coachId);
     }
 
-    @PostMapping("/reservations/{reservationId}/accept")
+    @PostMapping("/coach-reservations/{reservationId}/accept")
     public void acceptReservation(@PathVariable Long reservationId, @RequestBody AcceptResultDto resultDto) {
         reservationService.accept(reservationId, resultDto);
     }

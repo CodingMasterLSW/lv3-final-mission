@@ -32,9 +32,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(coachAuthorizeInterceptor)
-            .addPathPatterns("/coaches/**");
+            .addPathPatterns("/coaches/**")
+            .addPathPatterns("/coach-reservations/**");
         registry.addInterceptor(crewAuthorizeInterceptor)
-            .addPathPatterns("/crews/**");
+            .addPathPatterns("/crews/**")
+            .addPathPatterns("/crew-reservations/**");
     }
 }
 
