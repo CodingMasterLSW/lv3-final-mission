@@ -1,5 +1,7 @@
 package finalmission.controller;
 
+import finalmission.domain.login.LoginMember;
+import finalmission.domain.member.Member;
 import finalmission.dto.LoginRequestDto;
 import finalmission.domain.login.Token;
 import finalmission.service.LoginService;

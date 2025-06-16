@@ -1,5 +1,7 @@
 package finalmission.service;
 
+import finalmission.domain.member.Coach;
+import finalmission.domain.member.Crew;
 import finalmission.domain.member.Member;
 import finalmission.domain.login.JwtProvider;
 import finalmission.dto.LoginRequestDto;
@@ -35,6 +37,16 @@ public class LoginService {
         String email = loginRequestDto.email();
         Member crew = findCrewByEmail(email);
         return jwtProvider.createToken(crew);
+    }
+
+    public Coach findByCoachId(Long id) {
+        return coachRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 코치 ID 입니다."));
+    }
+
+    public Crew findByCrewId(Long id) {
+        return crewRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 크루 ID 입니다."));
     }
 
     private Member findCoachByEmail(String email) {
