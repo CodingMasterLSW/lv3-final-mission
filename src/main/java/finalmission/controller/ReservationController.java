@@ -1,8 +1,9 @@
 package finalmission.controller;
 
+import finalmission.domain.login.LoginMember;
+import finalmission.domain.member.Member;
 import finalmission.domain.reservation.Reservation;
 import finalmission.dto.AcceptResultDto;
-import finalmission.dto.ReservationRemoveRequest;
 import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
 import finalmission.service.ReservationService;
@@ -30,43 +31,43 @@ public class ReservationController {
     // TODO : API Endpoint 변경하기
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/crew-reservation")
-    public Reservation save(@RequestBody ReservationRequestDto reservationRequestDto) {
-        return reservationService.save(reservationRequestDto);
+    public Reservation save(@RequestBody ReservationRequestDto reservationRequestDto, @LoginMember Member member) {
+        return reservationService.save(reservationRequestDto, member);
     }
 
     // TODO : API Endpoint 변경하기
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/coach-reservations/{reservationId}")
     public void deleteFromCoach(
-        @PathVariable Long reservationId,
-        @RequestBody ReservationRemoveRequest request
-    ) {
-        reservationService.deleteFromCoach(reservationId, request.id());
+        @PathVariable Long reservationId, @LoginMember Member member) {
+        reservationService.deleteFromCoach(reservationId, member);
     }
 
     // TODO : API Endpoint 변경하기
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/crew-reservations/{reservationId}")
-    public void deleteFromCrew(
-        @PathVariable Long reservationId,
-        @RequestBody ReservationRemoveRequest request) {
-        reservationService.deleteFromCrew(reservationId, request.id());
+    public void deleteFromCrew(@PathVariable Long reservationId, @LoginMember Member member) {
+        reservationService.deleteFromCrew(reservationId, member);
     }
 
     // TODO : API Endpoint 변경하기
     @GetMapping("/crews/{crewId}/reservations")
-    public List<ReservationResponse> getAllFromCrew(@PathVariable("crewId") Long crewId) {
-        return reservationService.getAllReservationsFromCrewId(crewId);
+    public List<ReservationResponse> getAllFromCrew(@PathVariable("crewId") Long crewId, @LoginMember Member member) {
+        return reservationService.getAllReservationsFromCrewId(crewId, member);
     }
 
     // TODO : API Endpoint 변경하기
     @GetMapping("/coaches/{coachId}/reservations")
-    public List<ReservationResponse> getAllFromCoach(@PathVariable Long coachId) {
-        return reservationService.getAllReservationsFromCoachId(coachId);
+    public List<ReservationResponse> getAllFromCoach(@PathVariable Long coachId, @LoginMember Member member) {
+        return reservationService.getAllReservationsFromCoachId(coachId, member);
     }
 
     @PostMapping("/coach-reservations/{reservationId}/accept")
-    public void acceptReservation(@PathVariable Long reservationId, @RequestBody AcceptResultDto resultDto) {
-        reservationService.accept(reservationId, resultDto);
+    public void acceptReservation(
+        @PathVariable Long reservationId,
+        @RequestBody AcceptResultDto resultDto,
+        @LoginMember Member member
+        ) {
+        reservationService.accept(reservationId, resultDto, member);
     }
 }

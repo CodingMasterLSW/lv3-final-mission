@@ -3,7 +3,6 @@ package finalmission.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import finalmission.domain.reservation.Reservation;
-import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
 import java.time.LocalDate;
 import java.util.List;

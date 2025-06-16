@@ -1,6 +1,7 @@
 package finalmission.service;
 
 import finalmission.domain.member.Coach;
+import finalmission.domain.member.Member;
 import finalmission.domain.reservation.Reservation;
 import finalmission.domain.member.Crew;
 import finalmission.domain.reservation.ReservationStatus;
@@ -42,9 +43,9 @@ public class ReservationService {
     }
 
     @Transactional
-    public Reservation save(ReservationRequestDto request) {
+    public Reservation save(ReservationRequestDto request, Member member) {
         Coach coach = findCoachById(request.coachId());
-        Crew crew = findCrewById(request.crewId());
+        Crew crew = findCrewById(member.getId());
         ReservationTime reservationTime = findTimeById(request.reservationTimeId());
         Reservation reservation = new Reservation(coach, crew, reservationTime, request.date(), ReservationStatus.PENDING);
         reservationRepository.save(reservation);
@@ -53,8 +54,11 @@ public class ReservationService {
     }
 
     @Transactional
-    public void accept(Long reservationId, AcceptResultDto acceptResultDto) {
+    public void accept(Long reservationId, AcceptResultDto acceptResultDto, Member member) {
         Reservation reservation = findReservationById(reservationId);
+        if (!reservation.isOwnerCoachRequest(member.getId())) {
+            throw new IllegalStateException("본인의 예약만 수락할 수 있습니다.");
+        }
         if (ReservationStatus.isAccepted(acceptResultDto.result())) {
             reservation.changeStatus(ReservationStatus.ACCEPT);
             mailService.sendSimpleMailMessage(MailRequestDto.toCrew(reservation));
@@ -70,32 +74,39 @@ public class ReservationService {
     }
 
     @Transactional
-    public void deleteFromCrew(Long reservationId, Long crewId) {
+    public void deleteFromCrew(Long reservationId, Member member) {
         Reservation reservation = findReservationById(reservationId);
-        if (!reservation.isOwnerCrewRequest(crewId)) {
+        if (!reservation.isOwnerCrewRequest(member.getId())) {
             throw new IllegalStateException("본인의 예약만 삭제할 수 있습니다.");
         }
         reservationRepository.deleteById(reservationId);
     }
 
     @Transactional
-    public void deleteFromCoach(Long reservationId, Long coachId) {
+    public void deleteFromCoach(Long reservationId, Member member) {
         Reservation reservation = findReservationById(reservationId);
-        if (!reservation.isOwnerCoachRequest(coachId)) {
+        if (!reservation.isOwnerCoachRequest(member.getId())) {
             throw new IllegalStateException("본인의 예약만 삭제할 수 있습니다.");
         }
         reservationRepository.deleteById(reservationId);
     }
 
     // TODO : 메서드 재활용 해보기
-    public List<ReservationResponse> getAllReservationsFromCrewId(Long crewId) {
+    public List<ReservationResponse> getAllReservationsFromCrewId(Long crewId, Member member) {
+        if (!member.getId().equals(crewId)) {
+            throw new IllegalStateException("본인의 예약에만 접근할 수 있습니다.");
+        }
         List<Reservation> reservations = reservationRepository.findAllByCrewId(crewId);
         return reservations.stream()
             .map(ReservationResponse::from)
             .toList();
     }
 
-    public List<ReservationResponse> getAllReservationsFromCoachId(Long coachId) {
+    public List<ReservationResponse> getAllReservationsFromCoachId(Long coachId, Member member) {
+        if (!member.getId().equals(coachId)) {
+            throw new IllegalStateException("본인의 예약에만 접근할 수 있습니다.");
+        }
+
         List<Reservation> reservations = reservationRepository.findAllByCoachId(coachId);
         return reservations.stream()
             .map(ReservationResponse::from)

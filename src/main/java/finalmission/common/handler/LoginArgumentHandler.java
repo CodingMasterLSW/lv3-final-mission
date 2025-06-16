@@ -37,11 +37,11 @@ public class LoginArgumentHandler implements HandlerMethodArgumentResolver {
         WebDataBinderFactory binderFactory
     ) throws Exception {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        String authHeader = request.getHeader("token");
+        String authHeader = request.getHeader("Authorization");
         String token = resolveToken(authHeader);
         Claims claims = jwtProvider.getClaimsAndValidateToken(token);
-        Long id = (Long) claims.get("id");
-        String memberTypeStr = (String) claims.get("memberType");
+        Long id = Long.valueOf(claims.get("id").toString());
+        String memberTypeStr = claims.get("memberType").toString();
         MemberType memberType = MemberType.valueOf(memberTypeStr);
         return getMember(id, memberType);
     }
