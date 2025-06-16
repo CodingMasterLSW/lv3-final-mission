@@ -1,5 +1,5 @@
 package finalmission.domain.login;
 
-public record Token(String accessToken) {
+public record Token(String token) {
 
 }

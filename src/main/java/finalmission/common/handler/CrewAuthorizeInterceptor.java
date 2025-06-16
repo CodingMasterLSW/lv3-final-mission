@@ -20,12 +20,21 @@ public class CrewAuthorizeInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) throws Exception {
-        String token = request.getHeader("token");
+        String authToken = request.getHeader("Authorization");
+        String token = resolveToken(authToken);
         Claims claims = jwtProvider.getClaimsAndValidateToken(token);
-        MemberType memberType = (MemberType) claims.get("memberType");
+        String memberTypeStr = (String) claims.get("memberType");
+        MemberType memberType = MemberType.valueOf(memberTypeStr);
         if (!memberType.name().equals("CREW")) {
             throw new IllegalStateException("크루만 접근 가능합니다.");
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);
+    }
+
+    private String resolveToken(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        throw new IllegalStateException("Authorization 헤더가 잘못되었습니다.");
     }
 }

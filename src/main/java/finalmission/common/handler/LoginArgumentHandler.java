@@ -37,10 +37,12 @@ public class LoginArgumentHandler implements HandlerMethodArgumentResolver {
         WebDataBinderFactory binderFactory
     ) throws Exception {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        String token = request.getHeader("token");
+        String authHeader = request.getHeader("token");
+        String token = resolveToken(authHeader);
         Claims claims = jwtProvider.getClaimsAndValidateToken(token);
         Long id = (Long) claims.get("id");
-        MemberType memberType = (MemberType) claims.get("memberType");
+        String memberTypeStr = (String) claims.get("memberType");
+        MemberType memberType = MemberType.valueOf(memberTypeStr);
         return getMember(id, memberType);
     }
 
@@ -49,5 +51,12 @@ public class LoginArgumentHandler implements HandlerMethodArgumentResolver {
             return loginService.findByCoachId(id);
         }
         return loginService.findByCrewId(id);
+    }
+
+    private String resolveToken(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        throw new IllegalStateException("Authorization 헤더가 잘못되었습니다.");
     }
 }
