@@ -2,7 +2,10 @@ package finalmission.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import finalmission.domain.member.Crew;
+import finalmission.domain.member.Coach;
 import finalmission.domain.reservation.Reservation;
+import finalmission.dto.ReservationRequestDto;
 import finalmission.dto.ReservationResponse;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +26,13 @@ class ReservationServiceTest {
     @Autowired
     private ReservationService reservationService;
 
+    private Crew crew1;
+    private Crew crew2;
+    private Crew crew3;
+    private Coach coach1;
+    private Coach coach2;
+    private Coach coach3;
+
     @BeforeEach
     void init() {
         initData();
@@ -42,11 +52,11 @@ class ReservationServiceTest {
 
         // given
         ReservationRequestDto requestDto = new ReservationRequestDto(
-            1L, 1L, 1L, LocalDate.now().plusDays(1)
+            1L, 1L, LocalDate.now().plusDays(1)
         );
 
         // when
-        Reservation save = reservationService.save(requestDto);
+        Reservation save = reservationService.save(requestDto, crew1);
 
         // then
         assertThat(save.getCrew().getName()).isEqualTo("젠슨");
@@ -59,23 +69,23 @@ class ReservationServiceTest {
 
         // given
         ReservationRequestDto requestDto1 = new ReservationRequestDto(
-            1L, 1L, 1L, LocalDate.now().plusDays(1)
+            1L, 1L, LocalDate.now().plusDays(1)
         );
         ReservationRequestDto requestDto2 = new ReservationRequestDto(
-            1L, 2L, 1L, LocalDate.now().plusDays(2)
+            2L, 1L, LocalDate.now().plusDays(2)
         );
 
         ReservationRequestDto requestDto3 = new ReservationRequestDto(
-            2L, 3L, 1L, LocalDate.now().plusDays(3)
+            3L, 1L, LocalDate.now().plusDays(3)
         );
 
-        reservationService.save(requestDto1);
-        reservationService.save(requestDto2);
-        reservationService.save(requestDto3);
+        reservationService.save(requestDto1, crew1);
+        reservationService.save(requestDto2, crew1);
+        reservationService.save(requestDto3, crew2);
 
         // when
         List<ReservationResponse> reservationResponses = reservationService.getAllReservationsFromCrewId(
-            1L);
+            1L, crew1);
 
         // then
         assertThat(reservationResponses.size()).isEqualTo(2);
@@ -87,23 +97,23 @@ class ReservationServiceTest {
 
         // given
         ReservationRequestDto requestDto1 = new ReservationRequestDto(
-            1L, 1L, 1L, LocalDate.now().plusDays(1)
+            1L, 1L, LocalDate.now().plusDays(1)
         );
         ReservationRequestDto requestDto2 = new ReservationRequestDto(
-            2L, 1L, 1L, LocalDate.now().plusDays(2)
+            1L, 1L, LocalDate.now().plusDays(2)
         );
 
         ReservationRequestDto requestDto3 = new ReservationRequestDto(
-            3L, 1L, 1L, LocalDate.now().plusDays(3)
+            1L, 1L, LocalDate.now().plusDays(3)
         );
 
-        reservationService.save(requestDto1);
-        reservationService.save(requestDto2);
-        reservationService.save(requestDto3);
+        reservationService.save(requestDto1, crew1);
+        reservationService.save(requestDto2, crew2);
+        reservationService.save(requestDto3, crew3);
 
         // when
         List<ReservationResponse> reservationResponses = reservationService.getAllReservationsFromCoachId(
-            1L);
+            1L, coach1);
 
         // then
         assertThat(reservationResponses.size()).isEqualTo(3);
@@ -118,7 +128,12 @@ class ReservationServiceTest {
         jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(1L, '솔라','a1@com')");
         jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(2L, '리사','a2@com')");
         jdbcTemplate.execute("INSERT INTO COACH(id, name, email) VALUES(3L, '네오','a3@com')");
+
+        crew1 = new Crew(1L, "젠슨", "a@com");
+        crew2 = new Crew(2L, "포포", "b@com");
+        crew3 = new Crew(3L, "가이온", "c@com");
+        coach1 = new Coach(1L, "솔라", "a1@com");
+        coach2 = new Coach(2L, "리사", "a2@com");
+        coach3 = new Coach(3L, "네오", "a3@com");
     }
 }
-
-

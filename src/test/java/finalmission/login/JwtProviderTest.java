@@ -20,7 +20,7 @@ public class JwtProviderTest {
     @Test
     void create_token() {
         Token test = jwtProvider.createToken(new Coach("test", "test@email.com"));
-        assertThat(test.accessToken()).isNotNull();
+        assertThat(test.token()).isNotNull();
     }
 
 }
